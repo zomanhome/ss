@@ -1,0 +1,110 @@
+body {
+  font-family: 'Segoe UI';
+  margin: 10px;
+  padding: 0;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.gray {
+  color: #696969;
+}
+
+.nowActive {
+  font-weight: 700;
+  background: #0078d7;
+  outline: 2px solid #000;
+  outline-offset: -4px;
+}
+
+.nowNotActive {
+  font-weight: 700;
+  background: #0078d7;
+}
+
+.otherActive {
+  outline: 2px solid #0078d7;
+  outline-offset: -2px;
+}
+
+.calendar {
+  color: #fff;
+  background: #151515;
+  width: 360px;
+  height: 455px;
+}
+
+.clock {
+  height: 112px;
+  padding-left: 23px;
+  border-bottom: solid 1px #454545;
+}
+
+.time {
+  height: 70px;
+  line-height: 79px;
+  font-size: 2.9em;
+  font-weight: 300;
+}
+
+.date {
+  color: #0078d7;
+}
+
+.numbers {
+  font-size: 1.2em;
+}
+
+.numbers .days div {
+  margin: 1px;
+}
+
+.numbers .days div:hover {
+  cursor: pointer;
+  background: #454545;
+  outline: 2px solid #696969;
+  outline-offset: -2px;
+}
+
+.control {
+  display: flex;
+  justify-content: normal;
+  height: 45px;
+  line-height: 50px;
+  padding-left: 22px;
+}
+
+.days {
+  display: flex;
+  justify-content: normal;
+  padding-left: 11px;
+  padding-right: 11px;
+  font-size: 0.8em;
+  height: 41px;
+  line-height: 41px;
+}
+
+.days div {
+  text-align: center;
+  width: 49px;
+}
+
+.buttons {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 11px;
+}
+
+.buttons div {
+  cursor: pointer;
+  text-align: center;
+  width: 49px;
+}
+
+.current {
+  width: 250px;
+}

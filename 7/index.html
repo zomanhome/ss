@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>JS Elementary Tasks</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+      integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+      crossorigin="anonymous"
+    />
+  </head>
+
+  <body>
+    <div class="container ml-80 ">
+      <h1 class="text-center">JS Elementary Tasks</h1>
+      <br />
+
+      <div class="jumbotron">
+        <h2>1. Шахматная доска</h2>
+        <input placeholder="Введите длинну" type="text" />
+        <input placeholder="Введите ширину" type="text" />
+        <input placeholder="Введите символ" type="text" />
+        <button onclick="runTask1()" class="btn btn-primary">
+          Показать доску
+        </button>
+        <h4 id="output" class="alert alert-light"></h4>
+      </div>
+
+      <div class="jumbotron">
+        <br />
+        <h2>2. Анализ конвертов</h2>
+        <p>Введите стороны Конверта 1:</p>
+        <input placeholder="Высота" />
+        <input placeholder="Ширина" /> <br /><br />
+        <p>Введите стороны Конверта 2:</p>
+        <input placeholder="Высота" />
+        <input placeholder="Ширина" />
+        <button onclick="runTask2()" class="btn btn-primary">
+          Вложить конверты
+        </button>
+        <h4 id="output" class="alert alert-light"></h4>
+      </div>
+
+      <div class="jumbotron">
+        <h2>3. Сортировка треугольников</h2>
+        <span
+          >[{ vertices: 'XYZ', x: 5, z: 1, y: 12.03 }, { vertices: 'ABC', a: 10,
+          b: 20, c: 22.36 }, { vertices: 'DEF', d: 12, e: 14, f: 24.13 }, {
+          vertices: 'GHI', g: 5, h: 1, i: 12.03 }, { vertices: 'JKL', j: 30, k:
+          20, l: 22.36 }]</span
+        >
+        <button onclick="runTask3()" class="btn btn-primary">
+          Сортировать по площади
+        </button>
+        <br />
+        <h4 id="output" class="alert alert-light"></h4>
+      </div>
+
+      <div class="jumbotron">
+        <h2>4. Палиндром</h2>
+        <p>Введите натуральное число:</p>
+        <input placeholder="Введите натуральное число" type="text" />
+        <button onclick="runTask4()" class="btn btn-primary">
+          Найти наибольший палиндром
+        </button>
+        <h4 id="output" class="alert alert-light"></h4>
+      </div>
+
+      <div class="jumbotron">
+        <h2>5. Счастливые билеты</h2>
+        <input placeholder="Введите min значение" type="text" />
+        <input placeholder="Введите max значение" type="text" />
+        <button onclick="runTask5()" class="btn btn-primary">
+          Расчитать методы
+        </button>
+        <h4 id="output" class="alert alert-light"></h4>
+      </div>
+
+      <div class="jumbotron">
+        <h2>6. Числовая последовательность</h2>
+        <input placeholder="Введите длинну ряда" type="text" />
+        <input placeholder="Введите значение квадрата" type="text" />
+        <button onclick="runTask6()" class="btn btn-primary">
+          Рассчитать ряд
+        </button>
+        <h4 id="output" class="alert alert-light"></h4>
+      </div>
+
+      <div id="fibo" class="jumbotron">
+        <h2>7. Ряд Фибоначчи для диапазона</h2>
+        <p>Введите значения min и max или значение length:</p>
+        <input placeholder="Введите min" type="text" />
+        <input placeholder="Введите max" type="text" />
+        <button
+          onclick="runTask7(event)"
+          data="1"
+          class="byRange btn btn-primary"
+        >
+          Расчитать по min max</button
+        ><br /><br />
+        <input placeholder="Введите длину" type="text" />
+        <button onclick="runTask7(event)" data="2" class="btn btn-primary">
+          Расчитать по длине
+        </button>
+        <h4 id="output" class="alert alert-light"></h4>
+      </div>
+
+    <script src="./src/task1.js"></script>
+    <script src="./src/task2.js"></script>
+    <script src="./src/task3.js"></script>
+    <script src="./src/task4.js"></script>
+    <script src="./src/task5.js"></script>
+    <script src="./src/task6.js"></script>
+    <script src="./src/task7.js"></script>
+    <script src="./main.js"></script>
+  </body>
+</html>
