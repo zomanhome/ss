@@ -1,5 +1,18 @@
 // Factory Method
 (function() {
+  function Animal(obj) {
+    this.id = obj.id;
+    this.name = obj.name;
+    this.price = obj.price;
+    this.quantity = obj.quantity;
+    this.age = obj.age;
+    this.type = obj.type;
+    this.gender = obj.gender;
+    this.weight = obj.weight;
+    this.color = obj.color;
+    this.lifespan = obj.lifespan;
+    this.predator = obj.predator;
+  }
   function PetFactory() {}
   PetFactory.animals = [];
   getData('db.json', createAnimals);
@@ -17,8 +30,9 @@
     arr.forEach(obj => {
       cards += `<div class="card text-white bg-info mb-3" style="width: 18rem;">
       <div class="card-body">
-        <h5 class="card-title">${obj.name}</h5>
-        <p class="card-text">${obj.type}</p>
+        <h5 class="card-title">${obj.name} [${obj.type}]</h5>
+        <p class="card-text">Quantity: ${obj.quantity}</p>
+        <p class="card-text">Price: ${obj.price}</p>
       </div>
     </div>`;
     });
@@ -67,64 +81,24 @@
   };
 
   PetFactory.register('dog', function(obj) {
-    this.id = obj.id;
-    this.name = obj.name;
-    this.price = obj.price;
-    this.quantity = obj.quantity;
-    this.age = obj.age;
-    this.type = obj.type;
-    this.gender = obj.gender;
-    this.weight = obj.weight;
-    this.color = obj.color;
-    this.lifespan = obj.lifespan;
-    this.predator = obj.predator;
+    Animal.apply(this, arguments);
     this.pedigree = obj.pedigree;
     this.group = obj.group;
   });
   PetFactory.register('cat', function(obj) {
-    this.id = obj.id;
-    this.name = obj.name;
-    this.price = obj.price;
-    this.quantity = obj.quantity;
-    this.age = obj.age;
-    this.type = obj.type;
-    this.gender = obj.gender;
-    this.weight = obj.weight;
-    this.color = obj.color;
-    this.lifespan = obj.lifespan;
-    this.predator = obj.predator;
+    Animal.apply(this, arguments);
     this.fur = obj.fur;
     this.docked = obj.docked;
     this.munchkin = obj.munchkin;
     this.lopiness = obj.lopiness;
   });
   PetFactory.register('fish', function(obj) {
-    this.id = obj.id;
-    this.name = obj.name;
-    this.price = obj.price;
-    this.quantity = obj.quantity;
-    this.age = obj.age;
-    this.type = obj.type;
-    this.gender = obj.gender;
-    this.weight = obj.weight;
-    this.color = obj.color;
-    this.lifespan = obj.lifespan;
-    this.predator = obj.predator;
+    Animal.apply(this, arguments);
     this.freshwater = obj.freshwater;
     this.level = obj.level;
   });
   PetFactory.register('bird', function(obj) {
-    this.id = obj.id;
-    this.name = obj.name;
-    this.price = obj.price;
-    this.quantity = obj.quantity;
-    this.age = obj.age;
-    this.type = obj.type;
-    this.gender = obj.gender;
-    this.weight = obj.weight;
-    this.color = obj.color;
-    this.lifespan = obj.lifespan;
-    this.predator = obj.predator;
+    Animal.apply(this, arguments);
     this.fly = obj.fly;
     this.talkativeness = obj.talkativeness;
     this.melodiousness = obj.melodiousness;
