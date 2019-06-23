@@ -7,6 +7,7 @@ body {
   -o-user-select: none;
   -webkit-user-select: none;
   user-select: none;
+  box-sizing: border-box;
 }
 
 .gray {
@@ -18,6 +19,16 @@ body {
   background: #0078d7;
   outline: 2px solid #000;
   outline-offset: -4px;
+  position: relative;
+  z-index: 1;
+}
+
+.nowActive:hover {
+  font-weight: 700 !important;
+  background: #0078d7 !important;
+  outline: 2px solid #000 !important;
+  outline-offset: -4px !important;
+  box-shadow: inset 0 0 0 2px aqua, inset 0 0 0 2px aqua !important;
 }
 
 .nowNotActive {

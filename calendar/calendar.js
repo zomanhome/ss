@@ -32,6 +32,7 @@
         break;
     }
   });
+  addEventListener('keydown', goArrows);
 
   for (let div of divs) div.onclick = divOnClick;
   setClock();
@@ -41,7 +42,6 @@
     day: 'numeric'
   });
   fillDays(current);
-  addEventListener('keydown', goArrows);
 
   function fillDays(date) {
     let now = date.getDate();
