@@ -23,7 +23,9 @@ jsElementaryTasks.task7 = function(event, obj) {
 
     if (!isNumeric(min) || !isNumeric(max))
       return (obj1 = { status: 'error', reason: 'not a number' });
-    if (+min > +max) return (obj1 = { status: 'error', reason: 'min > max' });
+    min = +min;
+    max = +max;
+    if (min > max) return (obj1 = { status: 'error', reason: 'min > max' });
 
     return true;
   }
