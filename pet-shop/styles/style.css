@@ -1,0 +1,51 @@
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  grid-gap: 1vw;
+  margin: 1vw 0;
+}
+
+.sticky {
+  position: sticky;
+  top: 10px;
+  background: #f8f8f8;
+  z-index: 10000;
+}
+
+.cart,
+.filters {
+  border: dotted 2px grey;
+  border-radius: 2px;
+  margin: 10px 0;
+  padding: 10px;
+}
+
+.card-footer,
+.card-text__2col {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.type-info {
+  position: relative;
+}
+
+.type-info div {
+  position: absolute;
+  opacity: 0;
+  left: 26%;
+  top: 15%;
+}
+
+.type-info:hover div {
+  opacity: 1;
+  transform: translate(5px, 5px);
+  transition: 0.8s;
+}
+
+.type-info:hover img {
+  filter: blur(2px);
+  opacity: 0.3;
+  transition: 0.5s;
+}
