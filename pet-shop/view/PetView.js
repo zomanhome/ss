@@ -136,6 +136,8 @@ export default class PetShopView {
         </div>
       </div>
     </div>
+    
+    
     `;
     let filterPets = filters.querySelectorAll('input[type=checkbox]');
 
@@ -149,6 +151,51 @@ export default class PetShopView {
         shop.addFilter(petsActive);
       });
     });
+  }
+
+  renderCarousel(data) {
+    let carousel = document.querySelector('.carousel');
+    let list = '';
+    let reverseDara = data.map(el => el).reverse();
+
+    reverseDara.forEach((obj, index) => {
+      let active = '';
+      if (index === 0) active = 'active';
+
+      list += `
+        <div class="carousel-item ${active}" data-interval="2000">
+          <img src="./img/id${obj.id}.jpg" class="d-block w-100" alt="${
+        obj.name
+      }">
+      </div>
+      `;
+    });
+
+    carousel.innerHTML = `
+      <div class="bd-example">
+        <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
+          <div class="carousel-inner">
+            ${list}
+          <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
+    </div>
+    `;
+    document
+      .querySelector('.carousel-inner')
+      .addEventListener('click', event => {
+        if (event.target.src) {
+          let id = +event.target.src.match(/\d+(?=\.jpg)/g);
+          let shop = PetShop.instance;
+          shop.addFilter(id);
+        }
+      });
   }
 }
 /* 

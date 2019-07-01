@@ -31,6 +31,7 @@ export default class PetShop {
         this.pets = this.PetShopModel.createPets(json);
         this.PetShopView.renderCards(this.pets);
         this.PetShopView.renderFilters();
+        this.PetShopView.renderCarousel(this.pets);
       })
       .catch(error => console.error(error));
   }
@@ -66,14 +67,21 @@ export default class PetShop {
     });
     this.addFilter(petsActive);
     this.PetShopView.renderCart(this.cart);
+    this.PetShopView.renderCarousel(this.pets);
   }
 
   addFilter(petsActive) {
-    let filtered = this.pets.filter(pet => {
-      if (petsActive.join('').indexOf(pet.type) !== -1) {
-        return pet;
-      }
-    });
+    let filtered = this.pets;
+    if (typeof petsActive === 'number') {
+      filtered = filtered.filter(pet => pet.id === petsActive);
+    }
+    if (typeof petsActive !== 'number') {
+      filtered = this.pets.filter(pet => {
+        if (petsActive.join(',').indexOf(pet.type) !== -1) {
+          return pet;
+        }
+      });
+    }
     this.PetShopView.renderCards(filtered);
   }
 }

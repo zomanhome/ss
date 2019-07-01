@@ -5,11 +5,18 @@
   margin: 1vw 0;
 }
 
+.carousel {
+  width: 250px;
+  margin-right: 10px;
+}
+
 .sticky {
   position: sticky;
+  align-items: center;
   top: 10px;
   background: #f8f8f8;
   z-index: 10000;
+  margin-bottom: 10px;
 }
 
 .cart,
