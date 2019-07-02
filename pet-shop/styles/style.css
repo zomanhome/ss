@@ -5,6 +5,10 @@
   margin: 1vw 0;
 }
 
+.list-group li:nth-child(1) {
+  background: lightgray;
+}
+
 .carousel {
   width: 250px;
   margin-right: 10px;
@@ -25,6 +29,20 @@
   border-radius: 2px;
   margin: 10px 0;
   padding: 10px;
+}
+
+.cart-icon {
+  display: flex;
+  height: 55px;
+}
+
+.cart-icon div {
+  margin-left: 10px;
+}
+
+.cart-icon-animation {
+  font-size: 1.5em;
+  transition-duration: 0.5s;
 }
 
 .card-footer,

@@ -100,16 +100,63 @@ export default class PetShopView {
   }
 
   renderCart(data) {
-    let cart = document.querySelector('.cart');
-    let list = '';
-    cart.innerHTML = '';
+    let cartIcon = document.querySelector('.cart-icon');
+    let cartModal = document.querySelector('.cart-modal');
+    let sums = [];
+    let list = `
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-5">Name</div>
+          <div class="col-2 text-center">Quantity</div>
+          <div class="col-2 text-center">Price($)</div>
+          <div class="col-3 text-center">Sum($)</div>
+        </div>
+      </li>
+      `;
 
     data.forEach(obj => {
+      let sum = +obj.quantity * +obj.price;
+      sums.push(sum);
       list += `
-        <div>${obj.name}: ${obj.quantity}</div>
+        <li class="list-group-item">
+          <div class="row">
+          <div class="col-5">${obj.name}</div>
+          <div class="col-2 text-center">${obj.quantity}</div>
+          <div class="col-2 text-center">${obj.price}</div>
+          <div class="col-3 text-center">${sum}</div>
+          </div>
+        </li>
       `;
     });
-    cart.innerHTML = `<div>Cart:</div>${list}`;
+    let total = sums.reduce((sum, current) => sum + current, 0);
+
+    cartIcon.innerHTML = `Total:<div>${total}</div>`;
+    cartIcon.classList.add('cart-icon-animation');
+    cartIcon.addEventListener('transitionend', () => {
+      cartIcon.classList.remove('cart-icon-animation');
+    });
+
+    cartModal.innerHTML = `
+      <ul class="list-group">
+        ${list}
+      </ul>
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-5">Make Order</div>
+          <div class="col-2 text-center">
+            <button type="button" class="btn btn-outline-dark btn-sm btn__cart_clear-all">CLEAR ALL</button>
+          </div>
+          <div class="col-2 text-right font-weight-bold">Total:</div>
+          <div class="col-3 text-center font-weight-bold">${total}</div>
+        </div>
+      </li>
+      `;
+    document
+      .querySelector('.btn__cart_clear-all')
+      .addEventListener('click', event => {
+        let shop = PetShop.instance;
+        shop.deleteAllFromCart();
+      });
   }
 
   renderFilters() {
@@ -167,7 +214,8 @@ export default class PetShopView {
           <img src="./img/id${obj.id}.jpg" class="d-block w-100" alt="${
         obj.name
       }">
-      </div>
+          <div class="carousel-caption d-none d-md-block">${obj.name}</div>
+        </div>
       `;
     });
 
@@ -196,6 +244,10 @@ export default class PetShopView {
           shop.addFilter(id);
         }
       });
+
+    setTimeout(() => {
+      document.querySelector('.carousel-control-next').click();
+    }, 2000);
   }
 }
 /* 
