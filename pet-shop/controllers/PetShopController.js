@@ -40,22 +40,58 @@ export default class PetShop {
     let petIndex = this.pets.map(pet => pet.id).indexOf(id);
     let cartIndex = this.cart.map(pet => pet.id).indexOf(id);
 
-    if (this.pets[petIndex].quantity === quantity) {
-      if (cartIndex === -1) {
-        this.cart.push(Object.assign({}, this.pets[petIndex]));
-        this.pets.splice(petIndex, 1);
-        //this.cart.push(removed);
+    if (petIndex !== -1) {
+      if (this.pets[petIndex].quantity === quantity) {
+        if (cartIndex === -1) {
+          this.cart.push(Object.assign({}, this.pets[petIndex]));
+          this.pets.splice(petIndex, 1);
+        } else {
+          this.cart[cartIndex].quantity += +quantity;
+          this.pets.splice(petIndex, 1);
+        }
       } else {
-        this.cart[cartIndex].quantity += +quantity;
-        this.pets.splice(petIndex, 1);
+        this.pets[petIndex].quantity -= quantity;
+        if (cartIndex === -1) {
+          this.cart.push(Object.assign({}, this.pets[petIndex]));
+          this.cart[this.cart.length - 1].quantity = quantity;
+        } else {
+          this.cart[cartIndex].quantity += +quantity;
+        }
+      }
+
+      let filterPets = document
+        .querySelector('.filters')
+        .querySelectorAll('input[type=checkbox]');
+      let petsActive = [];
+      filterPets.forEach(pet => {
+        if (pet.checked) petsActive.push(pet.name);
+      });
+      this.addFilter(petsActive);
+      this.PetShopView.renderCart(this.cart);
+      this.PetShopView.renderCarousel(this.pets);
+    }
+  }
+
+  deletePetFromCart(id) {
+    let petIndex = this.pets.map(pet => pet.id).indexOf(id);
+    let cartIndex = this.cart.map(pet => pet.id).indexOf(id);
+
+    if (this.cart[cartIndex].quantity === 1) {
+      if (petIndex === -1) {
+        this.pets.push(Object.assign({}, this.cart[cartIndex]));
+        this.cart.splice(cartIndex, 1);
+      } else {
+        this.pets[petIndex].quantity += 1;
+        this.cart.splice(cartIndex, 1);
       }
     } else {
-      this.pets[petIndex].quantity -= quantity;
-      if (cartIndex === -1) {
-        this.cart.push(Object.assign({}, this.pets[petIndex]));
-        this.cart[this.cart.length - 1].quantity = quantity;
+      if (petIndex === -1) {
+        this.pets.push(Object.assign({}, this.cart[cartIndex]));
+        this.pets[this.pets.length - 1].quantity = 1;
+        this.cart[cartIndex].quantity -= 1;
       } else {
-        this.cart[cartIndex].quantity += +quantity;
+        this.cart[cartIndex].quantity -= 1;
+        this.pets[petIndex].quantity += 1;
       }
     }
 

@@ -100,14 +100,15 @@ export default class PetShopView {
   }
 
   renderCart(data) {
+    let shop = PetShop.instance;
     let cartIcon = document.querySelector('.cart-icon');
     let cartModal = document.querySelector('.cart-modal');
     let sums = [];
     let list = `
       <li class="list-group-item">
         <div class="row">
-          <div class="col-5">Name</div>
-          <div class="col-2 text-center">Quantity</div>
+          <div class="col-4">Name</div>
+          <div class="col-3 text-center">Quantity</div>
           <div class="col-2 text-center">Price($)</div>
           <div class="col-3 text-center">Sum($)</div>
         </div>
@@ -120,8 +121,17 @@ export default class PetShopView {
       list += `
         <li class="list-group-item">
           <div class="row">
-          <div class="col-5">${obj.name}</div>
-          <div class="col-2 text-center">${obj.quantity}</div>
+          <div class="col-4">${obj.name}</div>
+          <div class="col-3 text-center">
+            <button type="button" name="${
+              obj.id
+            }" class="btn btn-outline-dark btn-sm cart_btn__down">-</button>
+              <span class="badge cart_badge__quantity">${obj.quantity}</span>
+            <button type="button" name="${
+              obj.id
+            }" class="btn btn-outline-dark btn-sm cart_btn__up">+</button>
+          </div>
+
           <div class="col-2 text-center">${obj.price}</div>
           <div class="col-3 text-center">${sum}</div>
           </div>
@@ -142,19 +152,32 @@ export default class PetShopView {
       </ul>
       <li class="list-group-item">
         <div class="row">
-          <div class="col-5">Make Order</div>
-          <div class="col-2 text-center">
+          <div class="col-4">Make Order</div>
+          <div class="col-3 text-center">
             <button type="button" class="btn btn-outline-dark btn-sm btn__cart_clear-all">CLEAR ALL</button>
           </div>
           <div class="col-2 text-right font-weight-bold">Total:</div>
           <div class="col-3 text-center font-weight-bold">${total}</div>
         </div>
       </li>
-      `;
+    `;
+    let cart_buttons__down = document.querySelectorAll('.cart_btn__down');
+    cart_buttons__down.forEach(down => {
+      down.addEventListener('click', event => {
+        shop.deletePetFromCart(+event.target.name);
+      });
+    });
+
+    let cart_buttons__up = document.querySelectorAll('.cart_btn__up');
+    cart_buttons__up.forEach(up => {
+      up.addEventListener('click', event => {
+        shop.addPetToCart(+event.target.name, 1);
+      });
+    });
+
     document
       .querySelector('.btn__cart_clear-all')
-      .addEventListener('click', event => {
-        let shop = PetShop.instance;
+      .addEventListener('click', () => {
         shop.deleteAllFromCart();
       });
   }
