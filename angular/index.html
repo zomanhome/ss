@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="TodoListApp">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Angular To Do</title>
+    <link rel="stylesheet" href="bootstrap.min.css" />
+    <script src="/node_modules/angular/angular.js"></script>
+    <script src="index.js"></script>
+  </head>
+  <body ng-controller="TodoListCtrl">
+    <div class="container">
+      <div class="page-header">
+        <div class="page-header">
+          <p>List: {{data.list.length}}</p>
+        </div>
+        <div class="panel">
+          <div class="input-group">
+            <input class="form-control" ng-model="text" placeholder="What to do...">
+              <span class="input-group-btn">
+                <button class="btn btn-secondary" ng-click="addTodo()">Add</button>
+              </span>
+            </div>
+          </div>
+        </div>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>To do</th>
+                    <th>Change</th>
+                    <th>Done</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="li in data.list">
+                    <td>{{li.name}}</td>
+                    <td><input type="checkbox" ng-model="li.done"></td>
+                    <td><span style="{{setStyle(li.done)}}">{{showText(li.done)}}</span></td>
+                    <td><button class="btn btn-secondary" ng-click="deleteTodo(li)">Delete</button></td>
+                </tr>
+            </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>
