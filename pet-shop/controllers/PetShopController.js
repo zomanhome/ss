@@ -36,7 +36,8 @@ export default class PetShop {
       .catch(error => console.error(error));
   }
 
-  addPetToCart(id, quantity) {
+  addPetToCart(id, quantity, from) {
+    if (from === undefined) from = true;
     let petIndex = this.pets.map(pet => pet.id).indexOf(id);
     let cartIndex = this.cart.map(pet => pet.id).indexOf(id);
 
@@ -67,7 +68,7 @@ export default class PetShop {
         if (pet.checked) petsActive.push(pet.name);
       });
       this.addFilter(petsActive);
-      this.PetShopView.renderCart(this.cart);
+      this.PetShopView.renderCart(this.cart, from);
       this.PetShopView.renderCarousel(this.pets);
     }
   }
@@ -103,7 +104,7 @@ export default class PetShop {
       if (pet.checked) petsActive.push(pet.name);
     });
     this.addFilter(petsActive);
-    this.PetShopView.renderCart(this.cart);
+    this.PetShopView.renderCart(this.cart, false);
     this.PetShopView.renderCarousel(this.pets);
   }
 
@@ -119,7 +120,7 @@ export default class PetShop {
     });
 
     this.cart = [];
-    this.PetShopView.renderCart(this.cart);
+    this.PetShopView.renderCart(this.cart, false);
     this.PetShopView.renderCards(this.pets);
     this.PetShopView.renderCarousel(this.pets);
     document
@@ -143,35 +144,3 @@ export default class PetShop {
     this.PetShopView.renderCards(filtered);
   }
 }
-/* 
-this.id = id;
-this.name = name;
-this.price = price;
-this.quantity = quantity;
-this.age = age;
-this.type = type;
-this.gender = gender;
-this.weight = weight;
-this.color = color;
-this.lifespan = lifespan;
-this.predator = predator;
-
-// Dog
-this.pedigree = pedigree;
-this.group = group;
-
-// Cat
-this.fur = fur;
-this.docked = docked;
-this.munchkin = munchkin;
-this.lopiness = lopiness;
-
-// Fish
-this.freshwater = freshwater;
-this.level = level;
-
-// Bird
-this.fly = fly;
-this.talkativeness = talkativeness;
-this.melodiousness = melodiousness;
- */

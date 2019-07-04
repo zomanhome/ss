@@ -2,6 +2,7 @@ import PetShop from '../controllers/PetShopController.js';
 
 export default class PetShopView {
   renderCards(data) {
+    let shop = PetShop.instance;
     let cards = document.querySelector('.cards');
     cards.innerHTML = '';
 
@@ -76,7 +77,7 @@ export default class PetShopView {
           <button type="button" class="btn btn-outline-dark btn-sm btn__up">+</button>
           </div>
           <div>
-          <button type="button" class="btn btn-outline-dark btn__buy">Buy me</button>
+          <button type="button" class="btn btn-outline-primary font-weight-bold btn__buy">Buy me</button>
           </div>
         </div>
         `;
@@ -91,7 +92,6 @@ export default class PetShopView {
         if (+quantity.innerHTML < +obj.quantity)
           quantity.innerHTML = +quantity.innerHTML + 1;
       });
-      let shop = PetShop.instance;
       parentDiv.querySelector('.btn__buy').addEventListener('click', () => {
         shop.addPetToCart(obj.id, +quantity.innerHTML);
       });
@@ -99,7 +99,7 @@ export default class PetShopView {
     });
   }
 
-  renderCart(data) {
+  renderCart(data, hidden) {
     let shop = PetShop.instance;
     let cartIcon = document.querySelector('.cart-icon');
     let cartModal = document.querySelector('.cart-modal');
@@ -108,9 +108,9 @@ export default class PetShopView {
       <li class="list-group-item">
         <div class="row">
           <div class="col-4">Name</div>
-          <div class="col-3 text-center">Quantity</div>
+          <div class="col-4 text-center">Quantity</div>
           <div class="col-2 text-center">Price($)</div>
-          <div class="col-3 text-center">Sum($)</div>
+          <div class="col-2 text-center">Sum($)</div>
         </div>
       </li>
       `;
@@ -122,7 +122,7 @@ export default class PetShopView {
         <li class="list-group-item">
           <div class="row">
           <div class="col-4">${obj.name}</div>
-          <div class="col-3 text-center">
+          <div class="col-4 text-center">
             <button type="button" name="${
               obj.id
             }" class="btn btn-outline-dark btn-sm cart_btn__down">-</button>
@@ -133,7 +133,7 @@ export default class PetShopView {
           </div>
 
           <div class="col-2 text-center">${obj.price}</div>
-          <div class="col-3 text-center">${sum}</div>
+          <div class="col-2 text-center">${sum}</div>
           </div>
         </li>
       `;
@@ -152,31 +152,38 @@ export default class PetShopView {
       </ul>
       <li class="list-group-item">
         <div class="row">
-          <div class="col-4">Make Order</div>
-          <div class="col-3 text-center">
-            <button type="button" class="btn btn-outline-dark btn-sm btn__cart_clear-all">CLEAR ALL</button>
+          <div class="col-4"><button type="button" class="btn btn-outline-primary btn__cart_make-order font-weight-bold">MAKE ORDER</button></div>
+          <div class="col-4 text-center">
+            <button type="button" class="btn btn-outline-dark font-weight-bold btn__cart_clear-all">CLEAR ALL</button>
           </div>
           <div class="col-2 text-right font-weight-bold">Total:</div>
-          <div class="col-3 text-center font-weight-bold">${total}</div>
+          <div class="col-2 text-center font-weight-bold">${total}</div>
         </div>
       </li>
     `;
-    let cart_buttons__down = document.querySelectorAll('.cart_btn__down');
-    cart_buttons__down.forEach(down => {
+    cartModal.hidden = hidden;
+    cartIcon.addEventListener('click', () => {
+      cartModal.hidden = true
+        ? (cartModal.hidden = false)
+        : (cartModal.hidden = true);
+    });
+    document.querySelectorAll('.cart_btn__down').forEach(down => {
       down.addEventListener('click', event => {
         shop.deletePetFromCart(+event.target.name);
       });
     });
-
-    let cart_buttons__up = document.querySelectorAll('.cart_btn__up');
-    cart_buttons__up.forEach(up => {
+    document.querySelectorAll('.cart_btn__up').forEach(up => {
       up.addEventListener('click', event => {
-        shop.addPetToCart(+event.target.name, 1);
+        shop.addPetToCart(+event.target.name, 1, false);
       });
     });
-
     document
       .querySelector('.btn__cart_clear-all')
+      .addEventListener('click', () => {
+        shop.deleteAllFromCart();
+      });
+    document
+      .querySelector('.btn__cart_make-order')
       .addEventListener('click', () => {
         shop.deleteAllFromCart();
       });
@@ -273,35 +280,3 @@ export default class PetShopView {
     }, 2000);
   }
 }
-/* 
-this.id = id;
-this.name = name;
-this.price = price;
-this.quantity = quantity;
-this.age = age;
-this.type = type;
-this.gender = gender;
-this.weight = weight;
-this.color = color;
-this.lifespan = lifespan;
-this.predator = predator;
-
-// Dog
-this.pedigree = pedigree;
-this.group = group;
-
-// Cat
-this.fur = fur;
-this.docked = docked;
-this.munchkin = munchkin;
-this.lopiness = lopiness;
-
-// Fish
-this.freshwater = freshwater;
-this.level = level;
-
-// Bird
-this.fly = fly;
-this.talkativeness = talkativeness;
-this.melodiousness = melodiousness;
- */
