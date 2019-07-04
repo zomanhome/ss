@@ -32,12 +32,12 @@ export default class PetShop {
         this.PetShopView.renderCards(this.pets);
         this.PetShopView.renderFilters();
         this.PetShopView.renderCarousel(this.pets);
+        this.PetShopView.renderCart(this.cart);
       })
       .catch(error => console.error(error));
   }
 
-  addPetToCart(id, quantity, from) {
-    if (from === undefined) from = true;
+  addPetToCart(id, quantity) {
     let petIndex = this.pets.map(pet => pet.id).indexOf(id);
     let cartIndex = this.cart.map(pet => pet.id).indexOf(id);
 
@@ -68,7 +68,7 @@ export default class PetShop {
         if (pet.checked) petsActive.push(pet.name);
       });
       this.addFilter(petsActive);
-      this.PetShopView.renderCart(this.cart, from);
+      this.PetShopView.renderCart(this.cart);
       this.PetShopView.renderCarousel(this.pets);
     }
   }
@@ -130,17 +130,34 @@ export default class PetShop {
   }
 
   addFilter(petsActive) {
-    let filtered = this.pets;
+    let filtered = this.pets,
+      id;
+
     if (typeof petsActive === 'number') {
-      filtered = filtered.filter(pet => pet.id === petsActive);
+      let petIndex = this.pets.map(pet => pet.id).indexOf(petsActive);
+      id = petsActive;
+      petsActive = [this.pets[petIndex].type];
     }
-    if (typeof petsActive !== 'number') {
-      filtered = this.pets.filter(pet => {
-        if (petsActive.join(',').indexOf(pet.type) !== -1) {
-          return pet;
-        }
-      });
+    filtered = this.pets.filter(pet => {
+      if (petsActive.join(',').indexOf(pet.type) !== -1) {
+        return pet;
+      }
+    });
+    if (id !== undefined) {
+      let petIndex = filtered.map(pet => pet.id).indexOf(id);
+      let removed = filtered.splice(petIndex, 1);
+      filtered.unshift(removed[0]);
     }
     this.PetShopView.renderCards(filtered);
+    document
+      .querySelector('.filters')
+      .querySelectorAll('input[type=checkbox]')
+      .forEach(input => {
+        if (petsActive.join(',').indexOf(input.name) !== -1) {
+          input.checked = true;
+        } else {
+          input.checked = false;
+        }
+      });
   }
 }

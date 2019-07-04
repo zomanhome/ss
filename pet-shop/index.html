@@ -10,18 +10,55 @@
   </head>
   <body>
     <div class="container">
-      <div class="sticky">
-        <div class="cart">
-          <div class="cart-icon">Total: 0</div>
-          <div class="cart-modal"></div>
+      <div class="pos-f-t sticky-top mb-2">
+        <div class="collapse" id="navbarToggleExternalContent">
+          <div class="bg-light p-4">
+            <div class="cart-modal"></div>
+          </div>
         </div>
-        </div>
-        <div class="d-flex">
+        <nav class="navbar navbar-dark bg-dark">
+          <div class="d-flex">
+            <a class="navbar-brand" href="javascript:void(0)">
+              <img
+                src="/img/icon.gif"
+                width="38"
+                height="28"
+                class="d-inline-block align-top"
+                alt=""
+              />
+              Pet Shop</a
+            >
+            <form class="form-inline">
+              <input
+                class="form-control"
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+              />
+            </form>
+          </div>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarToggleExternalContent"
+            aria-controls="navbarToggleExternalContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="cart-icon"></span>
+          </button>
+        </nav>
+      </div>
+      <div class="row">
+        <div class="col-3">
           <div class="carousel"></div>
           <div class="filters"></div>
         </div>
+        <div class="col-9">
+          <div class="cards"></div>
+        </div>
       </div>
-      <div class="cards"></div>
     </div>
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

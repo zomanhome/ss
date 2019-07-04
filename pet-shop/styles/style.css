@@ -1,43 +1,18 @@
 .cards {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
   grid-gap: 1vw;
-  margin: 1vw 0;
 }
 
 .list-group li:nth-child(1) {
   background: lightgray;
 }
 
-.carousel {
-  width: 250px;
-  margin-right: 10px;
-}
-
-.sticky {
-  position: sticky;
-  align-items: center;
-  top: 10px;
-  background: #f8f8f8;
-  z-index: 10000;
-  margin-bottom: 10px;
-}
-
-.cart,
 .filters {
-  border: dotted 2px grey;
-  border-radius: 2px;
+  border: solid 2px grey;
+  border-radius: 5px 5px 5px 5px/25px 25px 25px 5px;
   margin: 10px 0;
   padding: 10px;
-}
-
-.cart-icon {
-  display: flex;
-  height: 55px;
-}
-
-.cart-icon div {
-  margin-left: 10px;
 }
 
 .cart-icon-animation {
@@ -45,11 +20,9 @@
   transition-duration: 0.5s;
 }
 
-.card-footer,
-.card-text__2col {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.carousel-caption {
+  opacity: 0.7;
+  border-radius: 25px 25px 55px 5px/5px 55px 25px 25px;
 }
 
 .type-info {
