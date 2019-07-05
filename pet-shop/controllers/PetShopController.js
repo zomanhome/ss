@@ -131,10 +131,12 @@ export default class PetShop {
       .forEach(el => (el.checked = true));
   }
 
-  buyFromOrder() {
+  buyFromOrder(person) {
+    this.PetShopModel.createHistory(person, this.cart);
     this.cart = [];
-    document.querySelector('.navbar-toggler').click();
     this.PetShopView.renderCart(this.cart);
+    this.PetShopView.renderHistoryModal();
+    document.querySelector('.navbar-toggler').click();
   }
 
   addFilter(petsActive) {

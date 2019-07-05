@@ -171,8 +171,9 @@ export default class PetShopView {
         <div class="row">
           <div class="col-8 d-flex justify-content-between">
             <button type="button" class="btn btn__make_order btn-outline-primary font-weight-bold" data-toggle="modal" data-target="#make-order">MAKE ORDER</button>
-            <button type="button" class="btn btn-outline-primary btn__cart_order-history font-weight-bold">HISTORY</button>
-            <button type="button" class="btn btn-outline-dark font-weight-bold btn__cart_clear-all">CLEAR ALL</button>
+            <button type="button" class="btn btn-outline-primary btn__cart_order-history font-weight-bold" data-toggle="modal" data-target="#make-history">HISTORY</button>
+            <button type="button" class="btn btn-outline-primary btn__cart_order-history_clear font-weight-bold">CLEAR HISTORY</button>
+            <button type="button" class="btn btn-outline-dark font-weight-bold btn__cart_clear-all">CLEAR LIST</button>
           </div>
           <div class="col-2 text-right font-weight-bold">Total:</div>
           <div class="col-2 text-center font-weight-bold">${total}</div>
@@ -202,6 +203,13 @@ export default class PetShopView {
       .addEventListener('click', () => {
         shop.deleteAllFromCart();
         document.querySelector('.navbar-toggler').click();
+      });
+    // Clear HISTORY
+    document
+      .querySelector('.btn__cart_order-history_clear')
+      .addEventListener('click', () => {
+        localStorage.clear('history');
+        this.renderHistoryModal(data);
       });
 
     // Modal for Order Form
@@ -250,14 +258,19 @@ export default class PetShopView {
     `;
     document.querySelector('.container').appendChild(orderModal);
 
+    // Modal for History
+    this.renderHistoryModal(data);
+
     // Order Buy Form
     orderModal
       .querySelector('.btn__buy_order')
       .addEventListener('click', () => {
         // Simple Validation
         let validate = true;
+        let values = orderModal.querySelectorAll('.form-group > input');
+        let person = { name: values[0].value, phone: values[2].value };
 
-        orderModal.querySelectorAll('.form-group > input').forEach(input => {
+        values.forEach(input => {
           if (input.value === '') {
             input.placeholder = 'Type info';
             input.classList.add('form-error');
@@ -268,9 +281,72 @@ export default class PetShopView {
         });
         if (validate) {
           $('#make-order').modal('hide');
-          shop.buyFromOrder();
+          shop.buyFromOrder(person);
         }
       });
+  }
+
+  renderHistoryModal() {
+    // Get Controller Methods
+    let shop = PetShop.instance;
+
+    let history = '';
+    shop.PetShopModel.getHistory().forEach(line => {
+      history += `
+        <li class="list-group-item">
+        <div class="row">
+          <div class="col-5">${line.date}</div>
+          <div class="col-3 text-center">${line.name}</div>
+          <div class="col-2 text-center">${line.phone}</div>
+          <div class="col-2 text-center">${line.pets}</div>
+        </div>
+        </li>
+      `;
+    });
+    history = `
+      <ul class="list-group">
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-5">Date</div>
+            <div class="col-3 text-center">Name</div>
+            <div class="col-2 text-center">Phone</div>
+            <div class="col-2 text-center">Rows</div>
+          </div>
+        </li>
+        ${history}
+      </ul>`;
+    let historyModal = document.createElement('div');
+    historyModal.setAttribute('id', 'make-history');
+    historyModal.id = 'make-history';
+    historyModal.classList.add('modal');
+    historyModal.tabIndex = -1;
+    historyModal.setAttribute('role', 'dialog');
+    historyModal.setAttribute('aria-labelledby', 'exampleModalLabel');
+    historyModal.setAttribute('aria-hidden', true);
+    historyModal.innerHTML = `
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">History</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            ${history}
+          </div>
+          <div class="modal-footer">
+            Have a nice day!
+          </div>
+        </div>
+      </div>
+    `;
+    if (document.querySelector('#make-history')) {
+      document.querySelector('#make-history').innerHTML =
+        historyModal.innerHTML;
+    } else {
+      document.querySelector('.container').appendChild(historyModal);
+    }
   }
 
   renderFilters() {

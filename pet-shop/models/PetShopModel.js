@@ -92,4 +92,28 @@ export default class PetShopModel {
 
     return pets;
   }
+
+  createHistory(person, pets) {
+    person.pets = pets.length;
+    person.date = new Date().toLocaleString('ru', {
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+    if (localStorage.getItem('history') === null) {
+      localStorage.setItem('history', JSON.stringify([person]));
+    } else {
+      let arr = JSON.parse(localStorage.getItem('history'));
+      arr.push(person);
+      localStorage.setItem('history', JSON.stringify(arr));
+    }
+  }
+
+  getHistory() {
+    if (localStorage.getItem('history') === null) return [];
+    return JSON.parse(localStorage.getItem('history'));
+  }
 }
