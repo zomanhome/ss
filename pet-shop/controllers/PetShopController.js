@@ -7,7 +7,8 @@ let singletonEnforcer = Symbol();
 export default class PetShop {
   constructor(enforcer) {
     if (enforcer !== singletonEnforcer)
-      throw 'Instantiation failed: use Singleton.getInstance() instead of new.';
+      throw 'Instantiation failed: use PetShop.instance instead of new.';
+
     this.pets = [];
     this.cart = [];
     this.PetShopModel = new PetShopModel(this.pets);
@@ -25,6 +26,7 @@ export default class PetShop {
   }
 
   init() {
+    // Get data from Model!!!
     fetch('./models/pets.json')
       .then(response => response.json())
       .then(json => {
@@ -120,13 +122,19 @@ export default class PetShop {
     });
 
     this.cart = [];
-    this.PetShopView.renderCart(this.cart, false);
+    this.PetShopView.renderCart(this.cart);
     this.PetShopView.renderCards(this.pets);
     this.PetShopView.renderCarousel(this.pets);
     document
       .querySelector('.filters')
       .querySelectorAll('input[type=checkbox]')
       .forEach(el => (el.checked = true));
+  }
+
+  buyFromOrder() {
+    this.cart = [];
+    document.querySelector('.navbar-toggler').click();
+    this.PetShopView.renderCart(this.cart);
   }
 
   addFilter(petsActive) {

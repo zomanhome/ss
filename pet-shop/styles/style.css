@@ -8,6 +8,10 @@
   background: lightgray;
 }
 
+.form-error {
+  border: solid 2px #faaa40;
+}
+
 .filters {
   border: solid 2px grey;
   border-radius: 5px 5px 5px 5px/25px 25px 25px 5px;
@@ -16,8 +20,9 @@
 }
 
 .cart-icon-animation {
+  color: #faaa40;
   font-size: 1.2em;
-  transition-duration: 0.5s;
+  transition-duration: 0.3s;
 }
 
 .carousel-caption {

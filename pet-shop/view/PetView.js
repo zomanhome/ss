@@ -102,10 +102,14 @@ export default class PetShopView {
   }
 
   renderCart(data) {
+    // Get Controller Methods
     let shop = PetShop.instance;
+
     let cartIcon = document.querySelector('.cart-icon');
     let cartModal = document.querySelector('.cart-modal');
     let sums = [];
+
+    // Header
     let list = `
       <li class="list-group-item">
         <div class="row">
@@ -118,6 +122,7 @@ export default class PetShopView {
       </li>
       `;
 
+    // Pets
     data.forEach(obj => {
       let sum = +obj.quantity * +obj.price;
       sums.push(sum);
@@ -144,17 +149,20 @@ export default class PetShopView {
         </li>
       `;
     });
+
     let total = String(sums.reduce((sum, current) => sum + current, 0)).replace(
       /(\d)(?=(\d\d\d)+([^\d]|$))/g,
       '$1 '
     );
 
+    // Cart Icon Animation
     cartIcon.innerHTML = `$ ${total}`;
     cartIcon.classList.add('cart-icon-animation');
     cartIcon.addEventListener('transitionend', () => {
       cartIcon.classList.remove('cart-icon-animation');
     });
 
+    // Footer
     cartModal.innerHTML = `
       <ul class="list-group">
         ${list}
@@ -162,7 +170,7 @@ export default class PetShopView {
       <li class="list-group-item">
         <div class="row">
           <div class="col-8 d-flex justify-content-between">
-            <button type="button" class="btn btn-outline-primary btn__cart_make-order font-weight-bold">MAKE ORDER</button>
+            <button type="button" class="btn btn__make_order btn-outline-primary font-weight-bold" data-toggle="modal" data-target="#make-order">MAKE ORDER</button>
             <button type="button" class="btn btn-outline-primary btn__cart_order-history font-weight-bold">HISTORY</button>
             <button type="button" class="btn btn-outline-dark font-weight-bold btn__cart_clear-all">CLEAR ALL</button>
           </div>
@@ -171,6 +179,14 @@ export default class PetShopView {
         </div>
       </li>
     `;
+
+    // Disable Make Order Button
+    let btn__make_order = document.querySelector('.btn__make_order');
+    data.length === 0
+      ? (btn__make_order.disabled = true)
+      : (btn__make_order.disabled = false);
+
+    // Listeners
     document.querySelectorAll('.cart_btn__down').forEach(down => {
       down.addEventListener('click', event => {
         shop.deletePetFromCart(+event.target.name);
@@ -187,10 +203,73 @@ export default class PetShopView {
         shop.deleteAllFromCart();
         document.querySelector('.navbar-toggler').click();
       });
-    document
-      .querySelector('.btn__cart_make-order')
+
+    // Modal for Order Form
+    let orderModal = document.createElement('div');
+    orderModal.setAttribute('id', 'make-order');
+    orderModal.id = 'make-order';
+    orderModal.classList.add('modal');
+    orderModal.tabIndex = -1;
+    orderModal.setAttribute('role', 'dialog');
+    orderModal.setAttribute('aria-labelledby', 'exampleModalLabel');
+    orderModal.setAttribute('aria-hidden', true);
+    orderModal.innerHTML = `
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Order</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="order-name" class="col-form-label">Name:</label>
+                <input type="text" class="form-control" id="order-name">
+              </div>
+              <div class="form-group">
+                <label for="order-email" class="col-form-label">E-mail:</label>
+                <input type="text" class="form-control" id="order-email">
+              </div>
+              <div class="form-group">
+                <label for="order-phone" class="col-form-label">Phone:</label>
+                <input type="text" class="form-control" id="order-phone">
+              </div>
+              <div class="form-group">
+                <label for="message-text" class="col-form-label">Message:</label>
+                <textarea class="form-control" id="message-text"></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary btn__buy_order">Buy</button>
+          </div>
+        </div>
+      </div>
+    `;
+    document.querySelector('.container').appendChild(orderModal);
+
+    // Order Buy Form
+    orderModal
+      .querySelector('.btn__buy_order')
       .addEventListener('click', () => {
-        shop.deleteAllFromCart();
+        // Simple Validation
+        let validate = true;
+
+        orderModal.querySelectorAll('.form-group > input').forEach(input => {
+          if (input.value === '') {
+            input.placeholder = 'Type info';
+            input.classList.add('form-error');
+            validate = false;
+          } else {
+            input.classList.remove('form-error');
+          }
+        });
+        if (validate) {
+          $('#make-order').modal('hide');
+          shop.buyFromOrder();
+        }
       });
   }
 
