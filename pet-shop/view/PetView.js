@@ -327,6 +327,10 @@ export default class PetShopView {
 
     // Modal for History
     this.renderHistoryModal(data);
+
+    document.querySelector('.navbar-brand').innerHTML = `
+      <img src="img/dog.gif" style="width: 38px; height: 28px" class="d-inline-block align-top" alt="" /> Pet Shop
+    `;
   }
 
   renderHistoryModal() {
