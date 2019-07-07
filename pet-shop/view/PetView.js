@@ -20,29 +20,29 @@ export default class PetShopView {
       switch (obj.type) {
         case 'dog':
           typeInfo = `
-            <p class="card-text mb-1">Pedigree: ${obj.pedigree}</p>
-            <p class="card-text mb-1">Group: ${obj.group}</p>
+            <h5 class="mb-1">Pedigree: ${obj.pedigree}</h5>
+            <h5 class="mb-1">Group: ${obj.group}</h5>
             `;
           break;
         case 'cat':
           typeInfo = `
-            <p class="card-text mb-1">Fur: ${obj.fur}</p>
-            <p class="card-text mb-1">Docked: ${obj.docked}</p>
-            <p class="card-text mb-1">Munchkin: ${obj.munchkin}</p>
-            <p class="card-text mb-1">Lopiness: ${obj.lopiness}</p>
+            <h5 class="mb-1">Fur: ${obj.fur}</h5>
+            <h5 class="mb-1">Docked: ${obj.docked}</h5>
+            <h5 class="mb-1">Munchkin: ${obj.munchkin}</h5>
+            <h5 class="mb-1">Lopiness: ${obj.lopiness}</h5>
           `;
           break;
         case 'fish':
           typeInfo = `
-            <p class="card-text mb-1">Freshwater: ${obj.freshwater}</p>
-            <p class="card-text mb-1">Level: ${obj.level}</p>
+            <h5 class="mb-1">Freshwater: ${obj.freshwater}</h5>
+            <h5 class="mb-1">Level: ${obj.level}</h5>
           `;
           break;
         case 'bird':
           typeInfo = `
-            <p class="card-text mb-1">Fly: ${obj.fly}</p>
-            <p class="card-text mb-1">Talkativeness: ${obj.talkativeness}</p>
-            <p class="card-text mb-1">Melodiousness: ${obj.melodiousness}</p>
+            <h5 class="mb-1">Fly: ${obj.fly}</h5>
+            <h5 class="mb-1">Talkativeness: ${obj.talkativeness}</h5>
+            <h5 class="mb-1">Melodiousness: ${obj.melodiousness}</h5>
           `;
           break;
         default:
@@ -50,9 +50,9 @@ export default class PetShopView {
           break;
       }
       card = `
-        <div class="card-header">${obj.name} [<span class="badge">${
+        <div class="card-header">${obj.name}<span class="badge">${
         obj.quantity
-      }</span>]</div>
+      }</span></div>
         <div class="type-info">
           <img src="./img/id${obj.id}.jpg" class="card-img-top" alt="" />
           <div>${typeInfo}</div>
@@ -74,12 +74,12 @@ export default class PetShopView {
         </div>
         <div class="card-footer d-flex justify-content-between text-center">
           <div>
-          <button type="button" class="btn btn-outline-dark btn-sm btn__down">-</button>
-          <span class="badge badge__quantity">1</span>
-          <button type="button" class="btn btn-outline-dark btn-sm btn__up">+</button>
+            <button type="button" class="btn btn-outline-dark btn-sm btn__down">-</button>
+            <span class="badge pr-2 pl-2 badge__quantity">1</span>
+            <button type="button" class="btn btn-outline-dark btn-sm btn__up">+</button>
           </div>
           <div>
-          <button type="button" class="btn btn-outline-primary font-weight-bold btn__buy">Buy me</button>
+            <button type="button" class="btn btn-outline-primary font-weight-bold btn__buy">Buy me</button>
           </div>
         </div>
         `;
@@ -113,11 +113,11 @@ export default class PetShopView {
     let list = `
       <li class="list-group-item">
         <div class="row">
-          <div class="col-3">Name</div>
-          <div class="col-2 text-center">Photo</div>
-          <div class="col-3 text-center">Quantity</div>
-          <div class="col-2 text-center">Price($)</div>
-          <div class="col-2 text-center">Sum($)</div>
+          <div class="col-3"><h5>Name</h5></div>
+          <div class="col-2 text-center"><h5>Photo</h5></div>
+          <div class="col-3 text-center"><h5>Quantity</h5></div>
+          <div class="col-2 text-center"><h5>Price($)</h5></div>
+          <div class="col-2 text-center"><h5>Sum($)</h5></div>
         </div>
       </li>
       `;
@@ -129,7 +129,7 @@ export default class PetShopView {
       list += `
         <li class="list-group-item">
           <div class="row">
-          <div class="col-3">${obj.name}</div>
+          <div class="col-3"><h4>${obj.name}</h4></div>
           <div class="col-2 text-center">
             <img src="./img/id${obj.id}.jpg" class="w-100 rounded-top" alt="" />
           </div>
@@ -137,14 +137,16 @@ export default class PetShopView {
             <button type="button" name="${
               obj.id
             }" class="btn btn-outline-dark btn-sm cart_btn__down">-</button>
-              <span class="badge cart_badge__quantity">${obj.quantity}</span>
+              <span class="badge cart_badge__quantity"><h4>${
+                obj.quantity
+              }</h4></span>
             <button type="button" name="${
               obj.id
             }" class="btn btn-outline-dark btn-sm cart_btn__up">+</button>
           </div>
 
-          <div class="col-2 text-center">${obj.price}</div>
-          <div class="col-2 text-center">${sum}</div>
+          <div class="col-2 text-center"><h4>${obj.price}</h4></div>
+          <div class="col-2 text-center"><h4>${sum}</h4></div>
           </div>
         </li>
       `;
@@ -175,8 +177,8 @@ export default class PetShopView {
             <button type="button" class="btn btn-outline-primary btn__cart_order-history_clear font-weight-bold">CLEAR HISTORY</button>
             <button type="button" class="btn btn-outline-dark font-weight-bold btn__cart_clear-all">CLEAR LIST</button>
           </div>
-          <div class="col-2 text-right font-weight-bold">Total:</div>
-          <div class="col-2 text-center font-weight-bold">${total}</div>
+          <div class="col-2 text-right font-weight-bold"><h4>Total:</h4></div>
+          <div class="col-2 text-center font-weight-bold"><h3>${total}</h3></div>
         </div>
       </li>
     `;
@@ -186,6 +188,12 @@ export default class PetShopView {
     data.length === 0
       ? (btn__make_order.disabled = true)
       : (btn__make_order.disabled = false);
+
+    // Disable Clear List Button
+    let btn__cart_clear_all = document.querySelector('.btn__cart_clear-all');
+    data.length === 0
+      ? (btn__cart_clear_all.disabled = true)
+      : (btn__cart_clear_all.disabled = false);
 
     // Listeners
     document.querySelectorAll('.cart_btn__down').forEach(down => {
@@ -198,21 +206,42 @@ export default class PetShopView {
         shop.addPetToCart(+event.target.name, 1, false);
       });
     });
-    document
-      .querySelector('.btn__cart_clear-all')
-      .addEventListener('click', () => {
-        shop.deleteAllFromCart();
-        document.querySelector('.navbar-toggler').click();
-      });
+
+    btn__cart_clear_all.addEventListener('click', () => {
+      shop.deleteAllFromCart();
+      document.querySelector('.navbar-toggler').click();
+    });
+
     // Clear HISTORY
-    document
-      .querySelector('.btn__cart_order-history_clear')
-      .addEventListener('click', () => {
-        localStorage.clear('history');
-        this.renderHistoryModal(data);
-      });
+    let btn__history_clear = document.querySelector(
+      '.btn__cart_order-history_clear'
+    );
+    let btn__history = document.querySelector('.btn__cart_order-history');
+    if (shop.PetShopModel.getHistory().length === 0) {
+      btn__history_clear.disabled = true;
+      btn__history.disabled = true;
+    } else {
+      btn__history_clear.disabled = false;
+      btn__history.disabled = false;
+    }
+    btn__history_clear.addEventListener('click', () => {
+      localStorage.clear('history');
+      this.renderHistoryModal(data);
+      btn__history_clear.disabled = true;
+      btn__history.disabled = true;
+    });
 
     // Modal for Order Form
+    let history = shop.PetShopModel.getHistory(),
+      name = '',
+      phone = '',
+      email = '';
+    if (history.length !== 0) {
+      let lastHistory = history[0];
+      name = lastHistory.name;
+      email = lastHistory.email;
+      phone = lastHistory.phone;
+    }
     let orderModal = document.createElement('div');
     orderModal.setAttribute('id', 'make-order');
     orderModal.id = 'make-order';
@@ -234,41 +263,52 @@ export default class PetShopView {
             <form>
               <div class="form-group">
                 <label for="order-name" class="col-form-label">Name:</label>
-                <input type="text" class="form-control" id="order-name">
+                <input type="text" value="${name}" class="form-control" id="order-name">
               </div>
               <div class="form-group">
                 <label for="order-email" class="col-form-label">E-mail:</label>
-                <input type="text" class="form-control" id="order-email">
+                <input type="text" value="${email}" class="form-control" id="order-email">
               </div>
               <div class="form-group">
                 <label for="order-phone" class="col-form-label">Phone:</label>
-                <input type="text" class="form-control" id="order-phone">
+                <input type="text" value="${phone}" class="form-control" id="order-phone">
               </div>
               <div class="form-group">
                 <label for="message-text" class="col-form-label">Message:</label>
-                <textarea class="form-control" id="message-text"></textarea>
+                <textarea style="height: 100px" class="form-control" id="message-text"></textarea>
               </div>
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary btn__buy_order">Buy</button>
+              <img src="./img/telegram.gif" class="mr-2 float-left" style="width: 55px" alt="" />
+              <h5 class="mt-3 mr-5"><a href="https://t.me/PetShopZomanbot" target="_blank" rel="noopener noreferrer">t.me/PetShopZomanbot</a><h5>
+            <button type="button" class="btn btn-primary btn-lg btn__buy_order">MAKE ORDER</button>
+            </div>
           </div>
         </div>
       </div>
     `;
-    document.querySelector('.container').appendChild(orderModal);
+    let makeOrderModal = document.querySelector('#make-order');
+    if (makeOrderModal !== null) {
+      makeOrderModal.innerHTML = orderModal.innerHTML;
+    } else {
+      document.querySelector('.container-fluid').appendChild(orderModal);
+    }
 
-    // Modal for History
-    this.renderHistoryModal(data);
-
-    // Order Buy Form
-    orderModal
+    // Order Form
+    makeOrderModal = document.querySelector('#make-order');
+    makeOrderModal
       .querySelector('.btn__buy_order')
       .addEventListener('click', () => {
         // Simple Validation
         let validate = true;
-        let values = orderModal.querySelectorAll('.form-group > input');
-        let person = { name: values[0].value, phone: values[2].value };
+        let values = makeOrderModal.querySelectorAll('.form-group > input');
+        let person = {
+          name: values[0].value,
+          email: values[1].value,
+          phone: values[2].value,
+          msg: makeOrderModal.querySelector('.form-group > textarea').value
+        };
 
         values.forEach(input => {
           if (input.value === '') {
@@ -281,9 +321,12 @@ export default class PetShopView {
         });
         if (validate) {
           $('#make-order').modal('hide');
-          shop.buyFromOrder(person);
+          shop.buyFromOrder(person, cartIcon.innerHTML);
         }
       });
+
+    // Modal for History
+    this.renderHistoryModal(data);
   }
 
   renderHistoryModal() {
@@ -295,10 +338,11 @@ export default class PetShopView {
       history += `
         <li class="list-group-item">
         <div class="row">
-          <div class="col-5">${line.date}</div>
-          <div class="col-3 text-center">${line.name}</div>
+          <div class="col-3">${line.date}</div>
+          <div class="col-2 text-center">${line.name}</div>
+          <div class="col-3 text-center">${line.email}</div>
           <div class="col-2 text-center">${line.phone}</div>
-          <div class="col-2 text-center">${line.pets}</div>
+          <div class="col-2 text-center">${line.total}</div>
         </div>
         </li>
       `;
@@ -307,10 +351,11 @@ export default class PetShopView {
       <ul class="list-group">
         <li class="list-group-item">
           <div class="row">
-            <div class="col-5">Date</div>
-            <div class="col-3 text-center">Name</div>
+            <div class="col-3">Date</div>
+            <div class="col-2 text-center">Name</div>
+            <div class="col-3 text-center">E-mail</div>
             <div class="col-2 text-center">Phone</div>
-            <div class="col-2 text-center">Rows</div>
+            <div class="col-2 text-center">Total</div>
           </div>
         </li>
         ${history}
@@ -324,7 +369,7 @@ export default class PetShopView {
     historyModal.setAttribute('aria-labelledby', 'exampleModalLabel');
     historyModal.setAttribute('aria-hidden', true);
     historyModal.innerHTML = `
-      <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">History</h5>
@@ -341,11 +386,11 @@ export default class PetShopView {
         </div>
       </div>
     `;
-    if (document.querySelector('#make-history')) {
+    if (document.querySelector('#make-history') !== null) {
       document.querySelector('#make-history').innerHTML =
         historyModal.innerHTML;
     } else {
-      document.querySelector('.container').appendChild(historyModal);
+      document.querySelector('.container-fluid').appendChild(historyModal);
     }
   }
 
@@ -358,19 +403,19 @@ export default class PetShopView {
         <div class="form-check">
           <div>
             <input type="checkbox" name="dog" class="form-check-input ml-0" checked>
-            <label class="form-check-label p-1">Dogs</label>
+            <label class="form-check-label p-1"><h4>Dogs</h4></label>
           </div>
           <div>
             <input type="checkbox" name="cat" class="form-check-input ml-0" checked>
-            <label class="form-check-label p-1">Cats</label>
+            <label class="form-check-label p-1"><h4>Cats</h4></label>
           </div>
           <div>
             <input type="checkbox" name="fish" class="form-check-input ml-0" checked>
-            <label class="form-check-label p-1">Fishes</label>
+            <label class="form-check-label p-1"><h4>Fishes</h4></label>
           </div>
           <div>
             <input type="checkbox" name="bird" class="form-check-input ml-0" checked>
-            <label class="form-check-label p-1">Birds</label>
+            <label class="form-check-label p-1"><h4>Birds</h4></label>
           </div>
         </div>
       </div>

@@ -11,9 +11,9 @@ export default class PetShop {
 
     this.pets = [];
     this.cart = [];
-    this.PetShopModel = new PetShopModel(this.pets);
+    this.PetShopModel = new PetShopModel();
     this.PetShopView = new PetShopView();
-    this.init();
+    this.PetShopModel.getData(this);
   }
 
   static get instance() {
@@ -26,17 +26,10 @@ export default class PetShop {
   }
 
   init() {
-    // Get data from Model!!!
-    fetch('./models/pets.json')
-      .then(response => response.json())
-      .then(json => {
-        this.pets = this.PetShopModel.createPets(json);
-        this.PetShopView.renderCards(this.pets);
-        this.PetShopView.renderFilters();
-        this.PetShopView.renderCarousel(this.pets);
-        this.PetShopView.renderCart(this.cart);
-      })
-      .catch(error => console.error(error));
+    this.PetShopView.renderCards(this.pets);
+    this.PetShopView.renderFilters();
+    this.PetShopView.renderCarousel(this.pets);
+    this.PetShopView.renderCart(this.cart);
   }
 
   addPetToCart(id, quantity) {
@@ -72,6 +65,7 @@ export default class PetShop {
       this.addFilter(petsActive);
       this.PetShopView.renderCart(this.cart);
       this.PetShopView.renderCarousel(this.pets);
+      this.PetShopModel.createData(this.pets, this.cart);
     }
   }
 
@@ -108,6 +102,7 @@ export default class PetShop {
     this.addFilter(petsActive);
     this.PetShopView.renderCart(this.cart, false);
     this.PetShopView.renderCarousel(this.pets);
+    this.PetShopModel.createData(this.pets, this.cart);
   }
 
   deleteAllFromCart() {
@@ -129,13 +124,16 @@ export default class PetShop {
       .querySelector('.filters')
       .querySelectorAll('input[type=checkbox]')
       .forEach(el => (el.checked = true));
+    this.PetShopModel.createData(this.pets, this.cart);
   }
 
-  buyFromOrder(person) {
-    this.PetShopModel.createHistory(person, this.cart);
+  buyFromOrder(person, total) {
+    this.PetShopModel.createHistory(person, this.cart, total);
+    this.PetShopModel.sendTelegramMessage(this.PetShopModel.getHistory('last'));
     this.cart = [];
     this.PetShopView.renderCart(this.cart);
     this.PetShopView.renderHistoryModal();
+    this.PetShopModel.createData(this.pets, this.cart);
     document.querySelector('.navbar-toggler').click();
   }
 

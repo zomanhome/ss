@@ -1,89 +1,37 @@
 import { Dog, Cat, Fish, Bird } from './PetModels.js';
 
 export default class PetShopModel {
+  getData(controller) {
+    if (localStorage.getItem('cart') !== null) {
+      controller.cart = JSON.parse(localStorage.getItem('cart'));
+    }
+    fetch('./models/pets.json')
+      .then(response => response.json())
+      .then(json => {
+        controller.pets = this.createPets(json);
+        if (localStorage.getItem('pets') !== null)
+          controller.pets = JSON.parse(localStorage.getItem('pets'));
+        controller.init();
+      })
+      .catch(error => console.error(error));
+  }
+
   createPets(data) {
     let pets = [];
 
     data.map(item => {
       switch (item.type) {
         case 'dog':
-          pets.push(
-            new Dog(
-              item.id,
-              item.name,
-              item.price,
-              item.quantity,
-              item.age,
-              item.type,
-              item.gender,
-              item.weight,
-              item.color,
-              item.lifespan,
-              item.predator,
-              item.pedigree,
-              item.group
-            )
-          );
+          pets.push(new Dog(item));
           break;
         case 'cat':
-          pets.push(
-            new Cat(
-              item.id,
-              item.name,
-              item.price,
-              item.quantity,
-              item.age,
-              item.type,
-              item.gender,
-              item.weight,
-              item.color,
-              item.lifespan,
-              item.predator,
-              item.fur,
-              item.docked,
-              item.munchkin,
-              item.lopiness
-            )
-          );
+          pets.push(new Cat(item));
           break;
         case 'fish':
-          pets.push(
-            new Fish(
-              item.id,
-              item.name,
-              item.price,
-              item.quantity,
-              item.age,
-              item.type,
-              item.gender,
-              item.weight,
-              item.color,
-              item.lifespan,
-              item.predator,
-              item.freshwater,
-              item.level
-            )
-          );
+          pets.push(new Fish(item));
           break;
         case 'bird':
-          pets.push(
-            new Bird(
-              item.id,
-              item.name,
-              item.price,
-              item.quantity,
-              item.age,
-              item.type,
-              item.gender,
-              item.weight,
-              item.color,
-              item.lifespan,
-              item.predator,
-              item.fly,
-              item.talkativeness,
-              item.melodiousness
-            )
-          );
+          pets.push(new Bird(item));
           break;
         default:
           console.log('class is not registered');
@@ -93,8 +41,14 @@ export default class PetShopModel {
     return pets;
   }
 
-  createHistory(person, pets) {
-    person.pets = pets.length;
+  createData(pets, cart) {
+    localStorage.setItem('pets', JSON.stringify(pets));
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }
+
+  createHistory(person, pets, total) {
+    person.total = total;
+    person.pets = pets; // not used yet
     person.date = new Date().toLocaleString('ru', {
       hour: 'numeric',
       minute: 'numeric',
@@ -107,13 +61,28 @@ export default class PetShopModel {
       localStorage.setItem('history', JSON.stringify([person]));
     } else {
       let arr = JSON.parse(localStorage.getItem('history'));
-      arr.push(person);
+      arr.unshift(person);
       localStorage.setItem('history', JSON.stringify(arr));
     }
   }
 
-  getHistory() {
-    if (localStorage.getItem('history') === null) return [];
-    return JSON.parse(localStorage.getItem('history'));
+  getHistory(last) {
+    let history = JSON.parse(localStorage.getItem('history'));
+
+    if (history === null) return [];
+    if (last) return history[0];
+
+    return history;
+  }
+
+  sendTelegramMessage(order) {
+    const api = 'https://api.telegram.org/bot';
+    const token = '829245155:AAEDPNIY03I5gr--J-x6DOcytSC32LI1gO4';
+    const chatId = '462696304';
+    let text = `${order.name} want to buy pets on ${order.total}. Contact: ${
+      order.phone
+    }, ${order.email}. Time: ${order.date} Message: ${order.msg}`;
+
+    fetch(`${api}${token}/sendMessage?chat_id=${chatId}&text=${text}`);
   }
 }
