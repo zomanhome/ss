@@ -424,8 +424,8 @@ export default class PetShopView {
         </div>
       </div>
     `;
-    let filterPets = filters.querySelectorAll('input[type=checkbox]');
 
+    let filterPets = filters.querySelectorAll('input[type=checkbox]');
     filterPets.forEach(pet => {
       pet.addEventListener('click', () => {
         let petsActive = [];
@@ -434,6 +434,13 @@ export default class PetShopView {
         });
         shop.addFilter(petsActive);
       });
+    });
+
+    let searchPets = document.querySelector('.navbar input');
+    searchPets.addEventListener('input', event => {
+      event.target.value === ''
+        ? shop.addFilter(event.target.value)
+        : shop.addSearch(event.target.value);
     });
   }
 

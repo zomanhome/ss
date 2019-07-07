@@ -140,7 +140,9 @@ export default class PetShop {
   addFilter(petsActive) {
     let filtered = this.pets,
       id;
-
+    if (typeof petsActive === 'string') {
+      if (petsActive === '') petsActive = ['cat', 'dog', 'fish', 'bird'];
+    }
     if (typeof petsActive === 'number') {
       let petIndex = this.pets.map(pet => pet.id).indexOf(petsActive);
       id = petsActive;
@@ -167,5 +169,9 @@ export default class PetShop {
           input.checked = false;
         }
       });
+  }
+
+  addSearch(str) {
+    console.log(str);
   }
 }
