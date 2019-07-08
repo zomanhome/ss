@@ -10,7 +10,7 @@ export default class PetShopView {
       <img src="img/dog.gif" style="width: 42px; height: 30px" class="d-inline-block align-top" alt="" /> CoolPets
     `;
     loginPage.innerHTML = `
-    <img src="img/login.png" class="d-inline-block align-top w-100" alt="" />
+      <img src="img/login.png" class="w-50" alt="" />
     `;
     loginButton.setAttribute('type', 'button');
     loginButton.classList.add('navbar-toggler');
