@@ -25,6 +25,11 @@ export default class PetShop {
     throw "Can't change constant property!";
   }
 
+  login() {
+    this.PetShopView.renderLogin();
+    //this.init();
+  }
+
   init() {
     this.PetShopView.renderCards(this.pets);
     this.PetShopView.renderFilters();
@@ -54,15 +59,21 @@ export default class PetShop {
           this.cart[cartIndex].quantity += +quantity;
         }
       }
+      let searchPets = document.querySelector('.navbar input');
+      if (searchPets.value !== '') {
+        this.addSearch(searchPets.value);
+      } else {
+        let filterPets = document
+          .querySelector('.filters')
+          .querySelectorAll('input[type=checkbox]');
+        let petsActive = [];
+        filterPets.forEach(pet => {
+          if (pet.checked) petsActive.push(pet.name);
+        });
 
-      let filterPets = document
-        .querySelector('.filters')
-        .querySelectorAll('input[type=checkbox]');
-      let petsActive = [];
-      filterPets.forEach(pet => {
-        if (pet.checked) petsActive.push(pet.name);
-      });
-      this.addFilter(petsActive);
+        this.addFilter(petsActive);
+      }
+
       this.PetShopView.renderCart(this.cart);
       this.PetShopView.renderCarousel(this.pets);
       this.PetShopModel.createData(this.pets, this.cart);
@@ -172,6 +183,19 @@ export default class PetShop {
   }
 
   addSearch(str) {
-    console.log(str);
+    str = str.toLowerCase();
+    let filtered = this.pets.filter(pet => {
+      if (
+        pet.name.toLowerCase().indexOf(str) !== -1 ||
+        pet.type.toLowerCase().indexOf(str) !== -1
+      ) {
+        return pet;
+      }
+    });
+    document
+      .querySelector('.filters')
+      .querySelectorAll('input[type=checkbox]')
+      .forEach(input => (input.checked = false));
+    this.PetShopView.renderCards(filtered);
   }
 }

@@ -11,7 +11,7 @@ export default class PetShopModel {
         controller.pets = this.createPets(json);
         if (localStorage.getItem('pets') !== null)
           controller.pets = JSON.parse(localStorage.getItem('pets'));
-        controller.init();
+        controller.login();
       })
       .catch(error => console.error(error));
   }

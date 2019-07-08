@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pet Shop</title>
+    <title>CoolPets</title>
     <link rel="stylesheet" href="styles/bootstrap.min.css" />
     <link rel="stylesheet" href="styles/style.css" />
     <script type="module" src="index.js"></script>
@@ -19,7 +19,7 @@
         <nav class="navbar navbar-dark bg-dark">
           <div class="d-flex">
             <a class="navbar-brand" href="javascript:void(0)"></a>
-            <form class="form-inline">
+            <form class="form-inline" hidden>
               <input
                 class="form-control"
                 type="search"
@@ -36,15 +36,17 @@
             aria-controls="navbarToggleExternalContent"
             aria-expanded="false"
             aria-label="Toggle navigation"
+            hidden
           >
             <span class="cart-icon"></span>
           </button>
         </nav>
       </div>
       <div class="row">
+        <div class="offset-1 col-10 position-fixed loginpage"></div>
         <div class="col-3 position-fixed">
           <div class="carousel"></div>
-          <div class="filters"></div>
+          <div class="filters" hidden></div>
         </div>
         <div class="offset-3 col-9">
           <div class="cards"></div>

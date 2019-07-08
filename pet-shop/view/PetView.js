@@ -1,6 +1,30 @@
 import PetShop from '../controllers/PetShopController.js';
 
 export default class PetShopView {
+  renderLogin() {
+    let shop = PetShop.instance;
+    document.querySelector('.navbar-brand').innerHTML = `
+      <img src="img/dog.gif" style="width: 42px; height: 30px" class="d-inline-block align-top" alt="" /> CoolPets
+    `;
+    document.querySelector('.loginpage').innerHTML = `
+    <img src="img/login.png" class="d-inline-block align-top w-100" alt="" />
+    `;
+
+    let loginButton = document.createElement('button');
+    loginButton.setAttribute('type', 'button');
+    loginButton.classList.add('navbar-toggler');
+    loginButton.innerHTML = `<span class="cart-icon">LOGIN</span>`;
+    loginButton.addEventListener('click', () => {
+      loginButton.hidden = true;
+      document.querySelector('.loginpage').hidden = true;
+      document.querySelector('.form-inline').hidden = false;
+      document.querySelector('.navbar-toggler').hidden = false;
+      document.querySelector('.filters').hidden = false;
+      shop.init();
+    });
+    document.querySelector('.navbar').appendChild(loginButton);
+  }
+
   renderCards(data) {
     let shop = PetShop.instance;
     let cards = document.querySelector('.cards');
@@ -327,10 +351,6 @@ export default class PetShopView {
 
     // Modal for History
     this.renderHistoryModal(data);
-
-    document.querySelector('.navbar-brand').innerHTML = `
-      <img src="img/dog.gif" style="width: 38px; height: 28px" class="d-inline-block align-top" alt="" /> Pet Shop
-    `;
   }
 
   renderHistoryModal() {
@@ -407,18 +427,22 @@ export default class PetShopView {
         <div class="form-check">
           <div>
             <input type="checkbox" name="dog" class="form-check-input ml-0" checked>
+            <img src="img/dogs_icon.png" style="width: 35px; height: 35px; opacity: 0.8" class="d-inline-block align-top" alt="" />
             <label class="form-check-label p-1"><h4>Dogs</h4></label>
           </div>
           <div>
             <input type="checkbox" name="cat" class="form-check-input ml-0" checked>
+            <img src="img/cats_icon.png" style="width: 35px; height: 35px; opacity: 0.8"" class="d-inline-block align-top" alt="" />
             <label class="form-check-label p-1"><h4>Cats</h4></label>
           </div>
           <div>
             <input type="checkbox" name="fish" class="form-check-input ml-0" checked>
+            <img src="img/fishes_icon.png" style="width: 35px; height: 35px; opacity: 0.8"" class="d-inline-block align-top" alt="" />
             <label class="form-check-label p-1"><h4>Fishes</h4></label>
           </div>
           <div>
             <input type="checkbox" name="bird" class="form-check-input ml-0" checked>
+            <img src="img/birds_icon.png" style="width: 35px; height: 35px; opacity: 0.8"" class="d-inline-block align-top" alt="" />
             <label class="form-check-label p-1"><h4>Birds</h4></label>
           </div>
         </div>
@@ -426,6 +450,8 @@ export default class PetShopView {
     `;
 
     let filterPets = filters.querySelectorAll('input[type=checkbox]');
+    let searchPets = document.querySelector('.navbar input');
+
     filterPets.forEach(pet => {
       pet.addEventListener('click', () => {
         let petsActive = [];
@@ -433,10 +459,10 @@ export default class PetShopView {
           if (pet.checked) petsActive.push(pet.name);
         });
         shop.addFilter(petsActive);
+        searchPets.value = '';
       });
     });
 
-    let searchPets = document.querySelector('.navbar input');
     searchPets.addEventListener('input', event => {
       event.target.value === ''
         ? shop.addFilter(event.target.value)
@@ -487,7 +513,9 @@ export default class PetShopView {
       .addEventListener('click', event => {
         if (event.target.src) {
           let id = +event.target.src.match(/\d+(?=\.jpg)/g);
+
           shop.addFilter(id);
+          document.querySelector('.navbar input').value = '';
         }
       });
 
