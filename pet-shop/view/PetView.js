@@ -3,20 +3,21 @@ import PetShop from '../controllers/PetShopController.js';
 export default class PetShopView {
   renderLogin() {
     let shop = PetShop.instance;
+    let loginButton = document.createElement('button');
+    let loginPage = document.querySelector('.loginpage');
+
     document.querySelector('.navbar-brand').innerHTML = `
       <img src="img/dog.gif" style="width: 42px; height: 30px" class="d-inline-block align-top" alt="" /> CoolPets
     `;
-    document.querySelector('.loginpage').innerHTML = `
+    loginPage.innerHTML = `
     <img src="img/login.png" class="d-inline-block align-top w-100" alt="" />
     `;
-
-    let loginButton = document.createElement('button');
     loginButton.setAttribute('type', 'button');
     loginButton.classList.add('navbar-toggler');
     loginButton.innerHTML = `<span class="cart-icon">LOGIN</span>`;
     loginButton.addEventListener('click', () => {
       loginButton.hidden = true;
-      document.querySelector('.loginpage').hidden = true;
+      loginPage.hidden = true;
       document.querySelector('.form-inline').hidden = false;
       document.querySelector('.navbar-toggler').hidden = false;
       document.querySelector('.filters').hidden = false;

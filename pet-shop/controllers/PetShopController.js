@@ -27,7 +27,6 @@ export default class PetShop {
 
   login() {
     this.PetShopView.renderLogin();
-    //this.init();
   }
 
   init() {
