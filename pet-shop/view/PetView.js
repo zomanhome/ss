@@ -10,18 +10,20 @@ export default class PetShopView {
       <img src="img/dog.gif" style="width: 42px; height: 30px" class="d-inline-block align-top" alt="" /> CoolPets
     `;
     loginPage.innerHTML = `
-      <img src="img/login.png" class="w-50" alt="" />
+      <img src="img/login.png" style="width: 72vh; margin-top: 5%" alt="" />
     `;
     loginButton.setAttribute('type', 'button');
-    loginButton.classList.add('navbar-toggler');
-    loginButton.innerHTML = `<span class="cart-icon">LOGIN</span>`;
+    loginButton.classList.add('navbar-toggler', 'btn__login');
+    loginButton.innerHTML = `<span>LOGIN</span>`;
     loginButton.addEventListener('click', () => {
       loginButton.hidden = true;
-      loginPage.hidden = true;
-      document.querySelector('.form-inline').hidden = false;
-      document.querySelector('.navbar-toggler').hidden = false;
-      document.querySelector('.filters').hidden = false;
-      shop.init();
+      loginPage.classList.add('login-fade');
+      setTimeout(() => {
+        document.querySelector('.form-inline').hidden = false;
+        document.querySelector('.navbar-toggler').hidden = false;
+        document.querySelector('.filters').hidden = false;
+        shop.init();
+      }, 400);
     });
     document.querySelector('.navbar').appendChild(loginButton);
   }
@@ -32,16 +34,16 @@ export default class PetShopView {
     cards.innerHTML = '';
 
     data.forEach(obj => {
-      let card = '';
+      let card = '',
+        typeInfo = '';
       let parentDiv = document.createElement('div');
+
       parentDiv.classList.add(
         'card',
         'text-dark',
         'bg-light',
         'border-secondary'
       );
-      let typeInfo = ``;
-
       switch (obj.type) {
         case 'dog':
           typeInfo = `
@@ -185,9 +187,9 @@ export default class PetShopView {
     // Cart Icon Animation
     cartIcon.innerHTML = `$ ${total}`;
     cartIcon.classList.add('cart-icon-animation');
-    cartIcon.addEventListener('transitionend', () => {
+    setTimeout(() => {
       cartIcon.classList.remove('cart-icon-animation');
-    });
+    }, 300);
 
     // Footer
     cartModal.innerHTML = `
@@ -270,7 +272,7 @@ export default class PetShopView {
     let orderModal = document.createElement('div');
     orderModal.setAttribute('id', 'make-order');
     orderModal.id = 'make-order';
-    orderModal.classList.add('modal');
+    orderModal.classList.add('modal', 'fade');
     orderModal.tabIndex = -1;
     orderModal.setAttribute('role', 'dialog');
     orderModal.setAttribute('aria-labelledby', 'exampleModalLabel');
@@ -388,13 +390,13 @@ export default class PetShopView {
     let historyModal = document.createElement('div');
     historyModal.setAttribute('id', 'make-history');
     historyModal.id = 'make-history';
-    historyModal.classList.add('modal');
+    historyModal.classList.add('modal', 'fade');
     historyModal.tabIndex = -1;
     historyModal.setAttribute('role', 'dialog');
     historyModal.setAttribute('aria-labelledby', 'exampleModalLabel');
     historyModal.setAttribute('aria-hidden', true);
     historyModal.innerHTML = `
-      <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+      <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">History</h5>
@@ -471,16 +473,31 @@ export default class PetShopView {
     });
   }
 
+  renderCheckbox(petsActive) {
+    let checkboxes = document
+      .querySelector('.filters')
+      .querySelectorAll('input[type=checkbox]');
+
+    checkboxes.forEach(input => {
+      if (petsActive.join(',').indexOf(input.name) !== -1) {
+        input.checked = true;
+      } else {
+        input.checked = false;
+      }
+    });
+  }
+
   renderCarousel(data) {
     let shop = PetShop.instance;
     let carousel = document.querySelector('.carousel');
     let list = '';
     let reverseDara = data.map(el => el).reverse();
+    let indexRandom = Math.floor(Math.random() * data.length);
 
     reverseDara.forEach((obj, index) => {
       let active = '';
-      if (index === 0) active = ' active';
 
+      if (index === indexRandom) active = ' active';
       list += `
         <div class="carousel-item${active}" data-interval="2000">
           <img src="./img/id${
@@ -501,13 +518,13 @@ export default class PetShopView {
           <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="sr-only">Next</span>
-        </a>
+          </a>
+          <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
       </div>
-    </div>
     `;
     document
       .querySelector('.carousel-inner')
@@ -519,9 +536,6 @@ export default class PetShopView {
           document.querySelector('.navbar input').value = '';
         }
       });
-
-    setTimeout(() => {
-      document.querySelector('.carousel-control-next').click();
-    }, 2000);
+    $('.carousel').carousel();
   }
 }

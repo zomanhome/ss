@@ -49,6 +49,7 @@ export default class PetShop {
           this.cart[cartIndex].quantity += +quantity;
           this.pets.splice(petIndex, 1);
         }
+        this.PetShopView.renderCarousel(this.pets);
       } else {
         this.pets[petIndex].quantity -= quantity;
         if (cartIndex === -1) {
@@ -58,6 +59,7 @@ export default class PetShop {
           this.cart[cartIndex].quantity += +quantity;
         }
       }
+
       let searchPets = document.querySelector('.navbar input');
       if (searchPets.value !== '') {
         this.addSearch(searchPets.value);
@@ -69,12 +71,10 @@ export default class PetShop {
         filterPets.forEach(pet => {
           if (pet.checked) petsActive.push(pet.name);
         });
-
         this.addFilter(petsActive);
       }
 
       this.PetShopView.renderCart(this.cart);
-      this.PetShopView.renderCarousel(this.pets);
       this.PetShopModel.createData(this.pets, this.cart);
     }
   }
@@ -86,6 +86,7 @@ export default class PetShop {
     if (this.cart[cartIndex].quantity === 1) {
       if (petIndex === -1) {
         this.pets.push(Object.assign({}, this.cart[cartIndex]));
+        this.PetShopView.renderCarousel(this.pets);
         this.cart.splice(cartIndex, 1);
       } else {
         this.pets[petIndex].quantity += 1;
@@ -96,6 +97,7 @@ export default class PetShop {
         this.pets.push(Object.assign({}, this.cart[cartIndex]));
         this.pets[this.pets.length - 1].quantity = 1;
         this.cart[cartIndex].quantity -= 1;
+        this.PetShopView.renderCarousel(this.pets);
       } else {
         this.cart[cartIndex].quantity -= 1;
         this.pets[petIndex].quantity += 1;
@@ -111,7 +113,6 @@ export default class PetShop {
     });
     this.addFilter(petsActive);
     this.PetShopView.renderCart(this.cart, false);
-    this.PetShopView.renderCarousel(this.pets);
     this.PetShopModel.createData(this.pets, this.cart);
   }
 
@@ -130,10 +131,7 @@ export default class PetShop {
     this.PetShopView.renderCart(this.cart);
     this.PetShopView.renderCards(this.pets);
     this.PetShopView.renderCarousel(this.pets);
-    document
-      .querySelector('.filters')
-      .querySelectorAll('input[type=checkbox]')
-      .forEach(el => (el.checked = true));
+    this.PetShopView.renderCheckbox(['cat', 'dog', 'fish', 'bird']);
     this.PetShopModel.createData(this.pets, this.cart);
   }
 
@@ -150,6 +148,7 @@ export default class PetShop {
   addFilter(petsActive) {
     let filtered = this.pets,
       id;
+
     if (typeof petsActive === 'string') {
       if (petsActive === '') petsActive = ['cat', 'dog', 'fish', 'bird'];
     }
@@ -169,16 +168,7 @@ export default class PetShop {
       filtered.unshift(removed[0]);
     }
     this.PetShopView.renderCards(filtered);
-    document
-      .querySelector('.filters')
-      .querySelectorAll('input[type=checkbox]')
-      .forEach(input => {
-        if (petsActive.join(',').indexOf(input.name) !== -1) {
-          input.checked = true;
-        } else {
-          input.checked = false;
-        }
-      });
+    this.PetShopView.renderCheckbox(petsActive);
   }
 
   addSearch(str) {
@@ -191,10 +181,7 @@ export default class PetShop {
         return pet;
       }
     });
-    document
-      .querySelector('.filters')
-      .querySelectorAll('input[type=checkbox]')
-      .forEach(input => (input.checked = false));
+    this.PetShopView.renderCheckbox([]);
     this.PetShopView.renderCards(filtered);
   }
 }

@@ -2,18 +2,22 @@ import { Dog, Cat, Fish, Bird } from './PetModels.js';
 
 export default class PetShopModel {
   getData(controller) {
-    if (localStorage.getItem('cart') !== null) {
+    if (localStorage.hasOwnProperty('cart')) {
       controller.cart = JSON.parse(localStorage.getItem('cart'));
     }
-    fetch('./models/pets.json')
-      .then(response => response.json())
-      .then(json => {
-        controller.pets = this.createPets(json);
-        if (localStorage.getItem('pets') !== null)
-          controller.pets = JSON.parse(localStorage.getItem('pets'));
+    if (localStorage.hasOwnProperty('pets')) {
+      setTimeout(() => {
+        controller.pets = JSON.parse(localStorage.getItem('pets'));
         controller.login();
-      })
-      .catch(error => console.error(error));
+      }, 0);
+    } else {
+      fetch('./models/pets.json')
+        .then(response => response.json())
+        .then(json => {
+          controller.pets = this.createPets(json);
+          controller.login();
+        });
+    }
   }
 
   createPets(data) {
@@ -57,12 +61,12 @@ export default class PetShopModel {
       month: 'long',
       day: 'numeric'
     });
-    if (localStorage.getItem('history') === null) {
-      localStorage.setItem('history', JSON.stringify([person]));
-    } else {
+    if (localStorage.hasOwnProperty('history')) {
       let arr = JSON.parse(localStorage.getItem('history'));
       arr.unshift(person);
       localStorage.setItem('history', JSON.stringify(arr));
+    } else {
+      localStorage.setItem('history', JSON.stringify([person]));
     }
   }
 

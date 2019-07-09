@@ -1,3 +1,7 @@
+body {
+  user-select: none;
+}
+
 .cards {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
@@ -12,6 +16,17 @@
   border: solid 2px #faaa40;
 }
 
+.btn__login:hover {
+  color: #faaa40;
+  font-size: 1.4em;
+}
+
+.loginpage.login-fade {
+  transform: matrix(1, 0, 0, -1, 0, 0);
+  height: 0;
+  transition: 0.6s;
+}
+
 .filters {
   border: solid 2px grey;
   border-radius: 5px 5px 5px 5px/25px 25px 25px 5px;
@@ -21,8 +36,8 @@
 
 .cart-icon-animation {
   color: #faaa40;
-  font-size: 1.2em;
-  transition-duration: 0.3s;
+  font-size: 1.4em;
+  transition: 0.3s;
 }
 
 .carousel-caption {
