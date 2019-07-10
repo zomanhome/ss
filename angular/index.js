@@ -21,7 +21,7 @@ TodoListApp.controller('TodoListCtrl', $scope => {
         $scope.data.list.push({ name: $scope.text, done: false });
         $scope.text = '';
       } else {
-        alert(`${$scope.text} have been added already. Please change it.`);
+        alert(`${$scope.text} already exist. Please change.`);
       }
     }
   };
