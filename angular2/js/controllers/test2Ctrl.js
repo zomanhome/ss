@@ -1,8 +1,8 @@
 angular
   .module('myApp', ['ngRoute'])
   .config(function($routeProvider) {
-    console.log(document.location);
-    if (String(document.location).indexOf('github') === -1) {
+    console.log(document.location.host);
+    if (document.location.host.indexOf('github') === -1) {
       $routeProvider.when('/table', {
         templateUrl: '/js/view/table.html'
       });
