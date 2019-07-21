@@ -1,0 +1,36 @@
+<h3>Employees List</h3>
+
+<div class="panel-body">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>E-mail</th>
+        <th>Password</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="employee in employees">
+        <td>{{ employee.name }}</td>
+        <td>{{ employee.phone }}</td>
+        <td>{{ employee.email }}</td>
+        <td>{{ employee.password }}</td>
+        <td>
+          <button class="btn btn-info" ng-click="delete(employee)">
+            Delete
+          </button>
+          <button class="btn btn-info" ng-click="editOrCreate(employee)">
+            Edit
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div>
+    <button class="btn btn-info" ng-click="refresh()">Refresh</button>
+    <button class="btn btn-info" ng-click="editOrCreate()">New</button>
+  </div>
+</div>
