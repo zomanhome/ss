@@ -2,7 +2,7 @@ angular
   .module('myApp', ['ngRoute'])
   .config(function($routeProvider) {
     console.log(document.location);
-    if (document.location.indexOf('github') === -1) {
+    if (String(document.location).indexOf('github') === -1) {
       $routeProvider.when('/table', {
         templateUrl: '/js/view/table.html'
       });
