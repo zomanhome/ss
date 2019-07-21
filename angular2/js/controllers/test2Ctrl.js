@@ -14,7 +14,10 @@ angular
   .controller('test2Ctrl', function($scope, $location) {
     $location.path('/table');
 
+    let id;
+
     $scope.create = function(employee) {
+      employee.id = id++;
       $scope.employees.push(employee);
       $location.path('/table');
     };
@@ -34,15 +37,9 @@ angular
           phone: '380000000002',
           email: 'name2@names.com',
           password: 'name2'
-        },
-        {
-          id: 2,
-          name: 'Name 3',
-          phone: '380000000003',
-          email: 'name3@names.com',
-          password: 'name3'
         }
       ];
+      id = $scope.employees.length;
     };
 
     $scope.update = function(employee) {
