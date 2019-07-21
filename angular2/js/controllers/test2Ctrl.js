@@ -1,15 +1,28 @@
 angular
   .module('myApp', ['ngRoute'])
   .config(function($routeProvider) {
-    $routeProvider.when('/table', {
-      templateUrl: '/js/view/table.html'
-    });
-    $routeProvider.when('/form', {
-      templateUrl: '/js/view/form.html'
-    });
-    $routeProvider.otherwise({
-      templateUrl: '/js/view/table.html'
-    });
+    console.log(document.location);
+    if (document.location.indexOf('github') === -1) {
+      $routeProvider.when('/table', {
+        templateUrl: '/js/view/table.html'
+      });
+      $routeProvider.when('/form', {
+        templateUrl: '/js/view/form.html'
+      });
+      $routeProvider.otherwise({
+        templateUrl: '/js/view/table.html'
+      });
+    } else {
+      $routeProvider.when('/table', {
+        templateUrl: '/ss/angular2/js/view/table.html'
+      });
+      $routeProvider.when('/form', {
+        templateUrl: '/ss/angular2/js/view/form.html'
+      });
+      $routeProvider.otherwise({
+        templateUrl: '/ss/angular2/js/view/table.html'
+      });
+    }
   })
   .controller('test2Ctrl', function($scope, $location) {
     $location.path('/table');
